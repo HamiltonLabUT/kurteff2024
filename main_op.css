@@ -1,0 +1,208 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
+
+body {
+	background-color: #222222;
+	color: #444;
+}
+a {
+	color: #08f;
+}
+h1 {
+	/*size: large;*/
+  font-size: 2em;
+  word-wrap: break-word;
+}
+
+@media only screen and (max-width: 800px) {
+    .hide-on-mobile {
+        display: none;
+    }
+    .resize-on-mobile {
+        width: 200px;
+    }
+    .resize-on-mobile h1 {
+      size: 16px;
+    }
+    .resize-on-mobile h2 {
+      size: 12px;
+    }
+    .resize-on-mobile li {
+      font-size: 9px;
+    }
+
+}
+
+.collapse-button {
+  width:100%;
+  padding: 0px;
+  text-align: left;
+  background-color: var(--elec-bg, #505050);
+  border: 0px;
+  cursor: pointer;
+}
+
+.collapsible-content {
+  display: block;
+}
+
+#topleft {
+  padding-left : 15px;
+  padding-right : 15px;
+  font-family: "Poppins", sans-serif; 
+  color: var(--list-text, #fff);
+  position: fixed;
+  /*z-index: 3;*/
+  /*width: 800px;*/
+}
+
+#lowerleft {
+  font-family: "Poppins", sans-serif;		
+  font-size: 1em;
+  margin-bottom: 1px;
+  margin-left : 1px;
+  margin-top: 0px;
+  /*padding-left : 15px;*/
+  /*padding-right : 15px;*/
+  padding-top : 0px;
+  width: 400px;
+  max-height: 300px;
+  background-color: #262626;
+  color: white;
+  position: fixed;
+  bottom: 0;
+}
+#centerleft {
+	font-family: "Poppins", sans-serif;		
+    margin-bottom: 1px;
+    /*margin-left : 1px;*/
+    margin-top: 0px;
+    padding-left : 10px;
+    padding-right : 10px;
+    padding-top : 0px;
+    width: 400px;
+    height: 300px;
+    background-color: #262626;
+    color: white;
+    position: relative;
+    bottom: 0;
+}
+#lowerright {
+	font-family: "Poppins", sans-serif;		
+  /*border: 2px solid red;*/
+    margin-bottom: 1px;
+    margin-left : 1px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top :0px;
+    width: 300px;
+    height: 350px;
+    color: white;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    background-color: #cccccc;
+}
+
+.list {
+  position: relative;
+}
+.list h2 {
+  color: #fff;
+  /*font-weight: 700;*/
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+.list ul {
+  position: relative;
+}
+.list ul li {
+  position: relative;
+  left: 0;
+  color: var(--list-text, #fff); /*#fce4ec;*/
+  list-style: none;
+  margin: 4px 0;
+  border-left: 2px solid #fff;/*#f50057;*/
+  transition: 0.5s;
+  cursor: pointer;
+}
+/*			.list ul li:hover {
+  left: 10px;
+}*/
+.list ul li span {
+  position: relative;
+  padding: 2px;
+  padding-left: 12px;
+  display: inline-block;
+  z-index: 1;
+  transition: 0.5s;
+}
+#parttxt #anattxt #chtxt span {
+  position: relative;
+  padding: 0px;
+  padding-left: 0px;
+  display: inline-block;
+  z-index: 1;
+}
+.list ul li:hover span {
+  color: #777;
+}
+.list ul li:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #f50057;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: 0.5s;
+}
+#phn {
+	border-left: 2px solid #f50057;
+}
+#phn:before {
+  transition: transform 0.5s ease;
+  transform: scaleX(var(--scale-factor, 1));
+}
+#gab:before {
+  background: #47B34E;
+  transition: transform 0.5s ease;
+  transform: scaleX(var(--scale-factor-gab, 1));
+}
+#gab {
+  border-left: 2px solid #47B34E;
+}
+#spec:before {
+  background: #265D8A;
+  transition: transform 0.5s ease;
+  transform: scaleX(var(--scale-factor-spec, 1));
+}
+#spec {
+	border-left: 2px solid #265D8A;
+}
+.animate_scale {
+	transform: scaleX(var(--scale-factor, 1));
+}
+#elecinfotxt {
+	color: var(--elecinfo-col, #fff);
+	background-color: var(--elec-bg, #505050); 
+	padding-left: 15px;
+}
+#evokedtxt {
+  color: var(--elecinfo-col, #fff);
+  background-color: var(--elec-bg, #505050); 
+  padding-left: 15px;
+  text-align: left;
+}
+
+#infoleft {
+  transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+  max-height: 500px; /* Adjust to the maximum height your content might need */
+  overflow: hidden;
+  width: 800px;
+  opacity: 1;
+}
+.hidden {
+    opacity: 0;
+    display: none;
+    max-height: 0px;
+}

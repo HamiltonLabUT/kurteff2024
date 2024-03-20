@@ -1,0 +1,61 @@
+<!-- Thanks to https://github.com/stemkoski/stemkoski.github.com/blob/master/Three.js/Mouse-Tooltip.html//-->
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Brain viewer - perception vs production selectivity</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link type="text/css" rel="stylesheet" href="main_op.css">
+                <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+	</head>
+	<body>
+		<script type="importmap">
+			{
+				"imports": {
+					"three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+					"three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+				}
+			}
+		</script>
+        <script type="text/javascript" src="./papaparse.min.js"></script>
+		<script type="module" src="viewer_op.js"></script>
+		<div id="topleft" class="resize-on-mobile">
+			<h1 id="title">Intracranial EEG Processing of Auditory Feedback in Perisylvian Cortex</h1>
+			<div id="infoleft" >
+			<p id="infopara" class="hide-on-mobile">Based on data from Kurteff et al. (in prep). Participants sentences aloud and listened to playback of their own voice.</p>
+			<ul id="navhelp" class="hide-on-mobile">
+				<li><b>Rotate:</b> Click and drag</li>
+				<li><b>Zoom:</b> Scroll</li>
+				<li><b>Pan:</b> Two-finger click and drag / shift-click and drag</li>
+			</ul>
+			</div>
+			<p id="hidepara"><a id="hidelink" href="#">((Hide this panel))</a></p>
+			<!--<p>Rotate: Click and drag</p>
+			<p>Zoom: Scroll</p>//-->
+			<!--<p style="font-size: small" class="hide-on-mobile"><i>Credits: Data processing and analysis - Maansi Desai. Visualization code - Liberty Hamilton.</i></p>//-->
+		</div>
+		<div id="lowerleft" class="list resize-on-mobile">
+			<button class="collapse-button"><h2 id="elecinfotxt">▼ Electrode Info:</h2></button>
+			<div class="collapsible-content" style="display: block">
+			<ul>
+			<li><span><b>Participant:</b> <span id="parttxt">Hover over electrodes to select</span></span></li>
+			<li><span><b>Electrode Name:</b> <span id="chtxt"></span></span></li>
+			<li><span><b>Anatomy:</b> <span id="anattxt"></span></span></li>
+			<!--<li><span id="erp_img"><img src="./png/ci/S0004_LHippo1_ci.png"/></span></li>//-->
+			</ul>
+		</div>
+		</div>
+<!-- 		<div id="centerleft" class="list">
+			<h2 style="background-color: #505050; padding-left: 5px">
+				This electrode responds strongly to visual stimuli. This means it...
+			</h2>
+			</ul>
+		</div> -->
+		<div id="lowerright" class="hide-on-mobile">
+			<h2 id="evokedtxt">Evoked Potential:</h2>
+			<img id="erp_img" src="./png/ci/S0004_LHippo1_ci.png" width="300px"/>
+			<!--<img src="elecs/pretty_rgb_cube.png" alt="RGB cube" width="450px"/>//-->
+		</div>
+		<!--<audio id='mySound' src='sounds/button-124476_2.mp3' />//-->
+	</body>
+</html>
