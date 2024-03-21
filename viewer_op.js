@@ -538,7 +538,7 @@ function loadAsset( params ) {
 	 					var rgb = [elec_array[i].r, elec_array[i].g, elec_array[i].b];
 	 					var scale = 1.0;
 
-						if (elec_array[i].include_elec == False) {
+						if (elec_array[i].include_elec == 'False') {
 							scale = 0.3;
 							rgb = [0, 0, 0];
 						}
