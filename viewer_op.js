@@ -538,17 +538,9 @@ function loadAsset( params ) {
 	 					var rgb = [elec_array[i].r, elec_array[i].g, elec_array[i].b];
 	 					var scale = 1.0;
 
-						if (map_type == 'ci') {
-							if ( elec_array[i].el_p > 0.05  || elec_array[i].sh_p > 0.05) {
-								scale = 0.3;
-								rgb = [0, 0, 0];
-							}
-						}
-						else {
-							if ( elec_array[i].spkr_p > 0.05  || elec_array[i].mic_p > 0.05) {
-								scale = 0.3;
-								rgb = [0, 0, 0];
-							}
+						if (elec_array[i].include_elec == False) {
+							scale = 0.3;
+							rgb = [0, 0, 0];
 						}
 
 	 					const colors = [];
