@@ -22,23 +22,22 @@
 		<div id="topleft" class="resize-on-mobile">
 			<h1 id="title">Intracranial EEG Processing of Auditory Feedback in Perisylvian Cortex</h1>
 			<div id="infoleft" >
-			<p id="infopara" class="hide-on-mobile">Based on data from Kurteff et al. (in prep). Participants sentences aloud and listened to playback of their own voice. Click on electrodes to see their responses during <span style="color: #873b8a; font-weight: bold">speaking</span>, <span style="color: #257036; font-weight: bold">listening</span>, and a <span style="color: #f4a127; font-weight: bold">click</span> sound.</p>
+			<p id="infopara" class="hide-on-mobile">Based on data from Kurteff et al. (in prep). Participants sentences aloud and listened to playback of their own voice. Click on electrodes to see their responses during <span style="color: #873b8a; font-weight: bold">speaking</span>, <span style="color: #257036; font-weight: bold">listening</span>, and a <span style="color: #f87efd; font-weight: bold">click</span> sound.</p>
 			<ul id="navhelp" class="hide-on-mobile">
 				<li><b>Rotate:</b> Click and drag</li>
 				<li><b>Zoom:</b> Scroll</li>
 				<li><b>Pan:</b> Two-finger click and drag / shift-click and drag</li>
 			</ul>
 			</div>
-			<p id="hidepara"><a id="hidelink" href="#">((Hide this panel))</a></p>
+			<p id="hidepara" class="hide-on-mobile"><a id="hidelink" href="#">((Hide this panel))</a></p>
 			<!--<p>Rotate: Click and drag</p>
 			<p>Zoom: Scroll</p>//-->
-			<!--<p style="font-size: small" class="hide-on-mobile"><i>Credits: Data processing and analysis - Maansi Desai. Visualization code - Liberty Hamilton.</i></p>//-->
 		</div>
-		<div id="lowerleft" class="list resize-on-mobile">
+		<div id="lowerleft" class="list hide-on-mobile">
 			<button class="collapse-button"><h2 id="elecinfotxt">▼ Electrode Info:</h2></button>
 			<div class="collapsible-content" style="display: block">
 			<ul>
-			<li><span><b>Participant:</b> <span id="parttxt">Hover over electrodes to select</span></span></li>
+			<li><span><b>Participant:</b> <span id="parttxt">Click on electrodes to select</span></span></li>
 			<li><span><b>Electrode Name:</b> <span id="chtxt"></span></span></li>
 			<li><span><b>Anatomy:</b> <span id="anattxt"></span></span></li>
 			<!--<li><span id="erp_img"><img src="./png/ci/S0004_LHippo1_ci.png"/></span></li>//-->
@@ -51,11 +50,11 @@
 			</h2>
 			</ul>
 		</div> -->
-		<div id="lowerright" class="hide-on-mobile">
-			<h2 id="evokedtxt">Evoked Potential:</h2>
-			<img id="erp_img" src="./png/ci/S0004_LHippo1_ci.png" width="300px"/>
-			<!--<img src="elecs/pretty_rgb_cube.png" alt="RGB cube" width="450px"/>//-->
+		<div id="lowerright" class="resize-on-mobile">
+			<button id="collapse-erp"><h2 id="evokedtxt">▼ Evoked Potential:</h2></button>
+			<div class="collapsible-erp-content" style="display: block">
+				<img id="erp_img" class="resize-on-mobile" src="./png/si/TCH06_RSF6_si.png"/>
+			</div>
 		</div>
-		<!--<audio id='mySound' src='sounds/button-124476_2.mp3' />//-->
 	</body>
 </html>

@@ -102,17 +102,14 @@ const respTypes = [
 	'suppression index',
 	'consistency index',
 ]
-const rois = [
-	'all',
-	'HG',
-	'PT',
-	'PP',
-	'STG',
-	'STS',
-	'MTG',
-	'insula',
-	'occ'
-]
+const rois = ['all','HG', 'IFG', 'IFS', 'ITG', 'ITS', 'MFG', 'MFS', 'MTG', 'OFC', 'PP',
+       'PT', 'SFG', 'SFS', 'SPL', 'STG', 'STS', 'amyg', 'angular',
+       'calcarine', 'cing', 'cuneus', 'front_operculum', 'front_pole',
+       'hippo', 'insula_ant', 'insula_inf', 'insula_post', 'insula_sup',
+       'intraparietal', 'lingual', 'lunate', 'occ_pole', 'occ_temp',
+       'outside_brain', 'paracentral', 'postCG', 'postCS', 'preCG',
+       'preCS', 'striatum', 'subcentral', 'supramar', 'temp_pole', 'thal',
+       'wm']
 
 // Materials
 const originalMaterials = {}
@@ -227,11 +224,11 @@ function init() {
 			//}
 		updateElecs();
 	})
-	subjFolder.add(params, 'roi', rois)
-		.name('Anatomy: ')
-		.onChange( function ( value ) {
-			updateElecs();
-		})
+	// subjFolder.add(params, 'roi', rois)
+	// 	.name('Anatomy: ')
+	// 	.onChange( function ( value ) {
+	// 		updateElecs();
+	// 	})
 	subjFolder.add(params, 'device_lines_checkbox')
 		.name('Device lines: ')
 		.onChange(function (value) {
@@ -306,7 +303,7 @@ function init() {
 		updateElecs();
 		render();
 	});
-	themeFolder.open();
+	//themeFolder.open();
 	
 	loadAsset( params );
 
@@ -532,8 +529,9 @@ function loadAsset( params ) {
 	 		var curr_elec_device = {name: 'new', ch: 'temp2', x:0, y:0, z:0};
 	 		for ( let i = 0; i < elec_array.length; i ++ ) {
 	 			const elecGeom = geometry.clone();
-	 			if ((elec_array[i].subj_id == params.subj) || (params.subj == 'atlas')) {
 
+	 			if ((elec_array[i].subj_id == params.subj) || (params.subj == 'atlas')) {
+	 				if ((elec_array[i].short_anat == params.roi) || (params.roi == 'all') ) {
 	 						
 	 					var rgb = [elec_array[i].r, elec_array[i].g, elec_array[i].b];
 	 					var scale = 1.0;
@@ -647,7 +645,7 @@ function loadAsset( params ) {
 						pickableObjects.push(object);
 
 						originalMaterials[object.name] = object.material;
-				
+				};
 			};
 		};
 		scene.add(pivot_lh);
@@ -717,8 +715,18 @@ function render() {
 //         divToHide.classList.add('hidden');
 //     });
 // });
+function checkIfMobile() {
+    const userAgent = navigator.userAgent;
+    // This regex checks for common mobile device indicators in the user agent string.
+    // You may need to update it depending on the devices you need to support.
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
+        // Change the title if a mobile device is detected.
+        document.getElementById("title").textContent = "Kurteff et al. 2024";
+    }
+}
 
 document.addEventListener('DOMContentLoaded', function() {
+		checkIfMobile();
     var link = document.getElementById('hidelink');
 		var panel = document.getElementById('infoleft');
 
@@ -752,6 +760,19 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             content.style.display = "none";
             collapseButton.innerHTML = "<h2 id='elecinfotxt'>► Electrode Info:</h2>";
+        }
+    });
+
+    var collapseERP = document.getElementById('collapse-erp');
+		var contentERP = document.querySelector('.collapsible-erp-content');
+    collapseERP.addEventListener('click', function() {
+    	console.log(contentERP.style.display)
+        if (contentERP.style.display === "none" || contentERP.style.display === '') {
+            contentERP.style.display = "block";
+            collapseERP.innerHTML = "<h2 id='evokedtxt'>▼ Evoked Potential:</h2>";
+        } else {
+            contentERP.style.display = "none";
+            collapseERP.innerHTML = "<h2 id='evokedtxt'>► Evoked Potential:</h2>";
         }
     });
 });
