@@ -17,17 +17,20 @@ h1 {
     .hide-on-mobile {
         display: none;
     }
-    .resize-on-mobile {
-        width: 200px;
+/*    .resize-on-mobile {
+        width: 100px;
+    }*/
+    .resize-on-mobile img {
+      width: 200px;
     }
     .resize-on-mobile h1 {
-      size: 16px;
+      size: 0.6em;
     }
     .resize-on-mobile h2 {
-      size: 12px;
+      size: 0.4em;
     }
     .resize-on-mobile li {
-      font-size: 9px;
+      font-size: 0.4em;
     }
 
 }
@@ -40,8 +43,20 @@ h1 {
   border: 0px;
   cursor: pointer;
 }
+#collapse-erp {
+  width:100%;
+  padding: 0px;
+  text-align: left;
+  background-color: var(--elec-bg, #505050);
+  border: 0px;
+  cursor: pointer;
+}
 
 .collapsible-content {
+  display: block;
+}
+
+.collapsible-erp-content {
   display: block;
 }
 
@@ -95,7 +110,7 @@ h1 {
     padding-right : 0px;
     padding-top :0px;
     width: 300px;
-    height: 350px;
+    max-height: 350px;
     color: white;
     position: fixed;
     right: 0;
@@ -182,6 +197,7 @@ h1 {
 .animate_scale {
 	transform: scaleX(var(--scale-factor, 1));
 }
+
 #elecinfotxt {
 	color: var(--elecinfo-col, #fff);
 	background-color: var(--elec-bg, #505050); 
