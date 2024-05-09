@@ -56,7 +56,7 @@ const params = {
 const subjs = [
 	'atlas', 'S0004', 'S0006', 'S0007', 
 	'S0014', 'S0015', 'S0017', 'S0018',
-  'S0019', 'S0020', 'S0021', 'S0023', 
+  'S0020', 'S0021', 'S0023', 
   'S0024', 'S0026', 'TCH06', 'TCH14']
 const themes = [
 	'dark', 'medium', 'light',
