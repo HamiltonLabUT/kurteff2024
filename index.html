@@ -77,8 +77,8 @@
 	        </div>
 	        <div id="tutorialSlide4" class="tutorialSlide">
 	            <h2>Choose Response Type →</h2>
-	            <p>Click on electrodes to view their high gamma evoked potential responses. For <i>Response Type</i> you can choose between:
-	            	<ul>
+	            <p>Click on electrodes to view their high gamma evoked potential responses. For <i>Response Type</i> you can choose between several options.
+	            	<ul class="hide-on-mobile">
 	            		<li><b>suppression index</b>: 
 	            			<ul>
 	            			<li><span style="color: #873b8a; font-weight: bold">purple</span> = bigger neural response during <span style="color: #873b8a; font-weight: bold">speaking</span></li>
@@ -92,7 +92,7 @@
 	            <button onclick="nextSlide(4)">Next</button>
 	            <button onclick="endTutorial()">Close Tutorial</button>
 	        </div>
-	        <div id="tutorialSlide5" class="tutorialSlide">
+	        <div id="tutorialSlide5" class="tutorialSlide hide-on-mobile">
 	            <h2>Electrode Information</h2>
 	            <p>When you click on an electrode, you will also see information about the participant ID, electrode name (given by the clinical montage), and anatomical area.
 	            </p>
@@ -100,7 +100,7 @@
 	            <button onclick="rotateScene(Math.PI); pickObject('electrode1780'); nextSlide(5)">Next</button>
 	            <button onclick="endTutorial()">Close Tutorial</button>
 	        </div>
-	       	<div id="tutorialSlide6" class="tutorialSlide">
+	       	<div id="tutorialSlide6" class="tutorialSlide hide-on-mobile">
 	            <h2>Onset suppression during speaking</h2>
 	            <p>This electrode shows strong onset responses during <span style="color: #257036; font-weight: bold">listening</span> that are suppressed during <span style="color: #873b8a; font-weight: bold">speaking</span>.
 	            </p>
