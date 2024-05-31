@@ -21,7 +21,8 @@ h1 {
         width: 100px;
     }*/
     .resize-on-mobile img {
-      width: 200px;
+      width: 100%;
+      height: auto;
     }
     .resize-on-mobile h1 {
       size: 0.6em;
@@ -261,23 +262,22 @@ h1 {
     overflow-y: auto;
 }
 @media only screen and (max-width: 600px) {
-    .tutorialSlide .top-slide .top-slide2 {
-        top: 10px;
+    .tutorialSlide {
         max-width: 95%;
         max-height: 95%;
         padding: 10px;
     }
-    .tutorialSlide .top-slide .top-slide2 img {
+    .tutorialSlide img {
         max-width: 70%;
         height: auto;
     }
-    .tutorialSlide .top-slide .top-slide2 h2 {
+    .tutorialSlide h2 {
         font-size: 1.5em;
     }
-    .tutorialSlide .top-slide .top-slide2 p {
+    .tutorialSlide p {
         font-size: 1em;
     }
-    .tutorialSlide .top-slide .top-slide2 button {
+    .tutorialSlide button {
         font-size: 1em;
     }
 }
