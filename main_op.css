@@ -262,12 +262,13 @@ h1 {
 }
 @media only screen and (max-width: 600px) {
     .tutorialSlide .top-slide .top-slide2 {
+        top: 10px;
         max-width: 95%;
         max-height: 95%;
         padding: 10px;
     }
     .tutorialSlide .top-slide .top-slide2 img {
-        max-width: 100%;
+        max-width: 70%;
         height: auto;
     }
     .tutorialSlide .top-slide .top-slide2 h2 {
