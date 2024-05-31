@@ -25,7 +25,8 @@ function showSlide(index) {
     if (overlay && currentSlide) {
         overlay.style.display = 'flex';
         currentSlide.style.display = 'block';
-
+        
+        if (window.innerWidth > 800) {
         if (index === 2) {
             currentSlide.classList.add('top-slide');
         }
@@ -42,6 +43,7 @@ function showSlide(index) {
         }
         if (index === 5) {
             currentSlide.classList.add('right-slide');
+        }
         }
         //    animateCameraToObject('electrode734');
         // }
