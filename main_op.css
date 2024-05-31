@@ -32,6 +32,9 @@ h1 {
     .resize-on-mobile li {
       font-size: 0.4em;
     }
+    .tutorialSlide {
+      max-width: 80%;
+    }
 
 }
 
