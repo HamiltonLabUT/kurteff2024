@@ -33,7 +33,7 @@ h1 {
       font-size: 0.4em;
     }
     .tutorialSlide .top-slide .top-slide2 {
-      width: 200px;
+      max-width: 200px;
     }
 
 }
