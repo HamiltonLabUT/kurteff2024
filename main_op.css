@@ -117,6 +117,9 @@ h1 {
     bottom: 0;
     background-color: #cccccc;
 }
+#lowerright .collapsible-erp-content img {
+    padding: 10px; /* Adjust the padding value as needed */
+}
 
 .list {
   position: relative;
@@ -221,4 +224,109 @@ h1 {
     opacity: 0;
     display: none;
     max-height: 0px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    display: none; /* Initially hidden */
+}
+
+.tutorialSlide ul {
+    list-style-type: disc; /* Optional: to show bullet points */
+    padding-left: 20px; /* Add padding to indent the list */
+    text-align: left; /* Align text to the left */
+}
+
+.tutorialSlide li {
+    margin-bottom: 10px; /* Add some space between list items */
+}
+
+.tutorialSlide {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+}
+
+.highlight {
+    border: 3px solid pink;
+    box-shadow: 0 0 10px pink;
+}
+
+.top-slide {
+    position: fixed;
+    top: 0;
+    /*left: 0;*/
+    width: 100%;
+    z-index: 1001; /* Make sure it is above the overlay */
+    background: white; /* Ensure the slide has a white background */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 20px;
+    border-radius: 0 0 10px 10px;
+    right: 270px; /* Position 100px from the right */
+    width: calc(100% - 270px); /* Ensure it doesn't overflow */
+    z-index: 1001; /* Ensure it is above the overlay */
+}
+
+.top-slide2 {
+    position: fixed;
+    top: 50px;
+    /*left: 0;*/
+    width: 100%;
+    z-index: 1001; /* Make sure it is above the overlay */
+    background: white; /* Ensure the slide has a white background */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 20px;
+    border-radius: 10px 10px 10px 10px;
+    right: 270px; /* Position 100px from the right */
+    width: calc(100% - 270px); /* Ensure it doesn't overflow */
+    z-index: 1001; /* Ensure it is above the overlay */
+}
+
+.left-slide {
+    position: fixed;
+    left: 0;
+    bottom: 220px;
+    width: 100%;
+    z-index: 1001; /* Make sure it is above the overlay */
+    background: white; /* Ensure the slide has a white background */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 20px;
+    border-radius: 10px 10px 10px 10px;
+    width: calc(100% - 270px); /* Ensure it doesn't overflow */
+    z-index: 1001; /* Ensure it is above the overlay */
+}
+.right-slide {
+    position: fixed;
+    right: 0;
+    top: 220px;
+    width: 100%;
+    z-index: 1001; /* Make sure it is above the overlay */
+    background: white; /* Ensure the slide has a white background */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 20px;
+    border-radius: 10px 10px 10px 10px;
+    width: calc(100% - 270px); /* Ensure it doesn't overflow */
+    z-index: 1001; /* Ensure it is above the overlay */
+}
+
+.overlay-below {
+    position: fixed;
+    top: 100px; /* Adjust based on the height of the top slide */
+    left: 0;
+    width: 100%;
+    height: calc(100% - 100px); /* Adjust based on the height of the top slide */
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000; /* Ensure it is below the slide but above the rest of the content */
 }

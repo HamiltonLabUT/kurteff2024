@@ -12,17 +12,21 @@ let intersects;
 var curr_intersect = 'none';
 
 const searchParams = new URLSearchParams(window.location.search);
-console.log(searchParams.get('type'));
+//console.log(searchParams.get('type'));
 var default_respType = 'suppression index';
 var map_type = '';
 switch (searchParams.get('type')) {
-	case 'ci':
-		default_respType = 'consistency index';
-		map_type = 'ci';
+	case 'elsh':
+		default_respType = 'consistent/inconsistent';
+		map_type = 'elsh';
 		break;
 	case 'nmf':
 		default_respType = 'NMF';
 		map_type = 'nmf';
+		break;
+	case 'mtrf':
+		default_respType = 'MTRF';
+		map_type = 'mtrf';
 		break;
 	case 'si':
 		default_respType = 'suppression index';
@@ -30,10 +34,11 @@ switch (searchParams.get('type')) {
 }
 
 const pointer = new THREE.Vector2();
-console.log(THREE.REVISION);
+//console.log(THREE.REVISION);
 const lowerleftdiv = document.getElementById('lowerleft');
 //const erp_img_div = document.getElementById('erp_img');
 const erp_img_div = document.getElementById('lowerright');
+const erp_div = document.getElementById('erp_div');
 
 let pickableObjects = [];
 let brainObjects = [];
@@ -54,10 +59,8 @@ const params = {
 	rh_checkbox: true,
 }
 const subjs = [
-	'atlas', 'S0004', 'S0006', 'S0007', 
-	'S0014', 'S0015', 'S0017', 'S0018',
-  'S0020', 'S0021', 'S0023', 
-  'S0024', 'S0026', 'TCH06', 'TCH14']
+	'atlas', 'DC2','DC4','DC5','DC7','DC8','DC10','DC11','DC12',
+	'DC13','DC14','DC15','DC16','DC17','DS9','TC3','TC6']
 const themes = [
 	'dark', 'medium', 'light',
 ] 
@@ -100,7 +103,8 @@ const theme_params = {
 const respTypes = [
 	'NMF',
 	'suppression index',
-	'consistency index',
+	'consistent/inconsistent',
+	'MTRF'
 ]
 const rois = ['all','HG', 'IFG', 'IFS', 'ITG', 'ITS', 'MFG', 'MFS', 'MTG', 'OFC', 'PP',
        'PT', 'SFG', 'SFS', 'SPL', 'STG', 'STS', 'amyg', 'angular',
@@ -164,9 +168,12 @@ var lh_group = new THREE.Group();
 let results;
 var elec_loader = new THREE.FileLoader();
 var elec_array;
+var controls;
+
+renderer = new THREE.WebGLRenderer( { antialias: false, alpha: false } );
 
 init();
-animate();
+animate2();
 
 
 function init() {
@@ -204,8 +211,11 @@ function init() {
 				//params.subj = 'atlas';
 				var map_type = '';
 				switch (params.respType) {
-					case 'consistency index':
-						map_type = 'ci';
+				  case 'MTRF':
+				  	map_type = 'mtrf';
+				  	break;
+					case 'consistent/inconsistent':
+						map_type = 'elsh';
 						break;
 					case 'NMF':
 						map_type = 'nmf';
@@ -311,7 +321,7 @@ function init() {
 	// look for intersecting electrodes
 	raycaster = new THREE.Raycaster();
 
-	renderer = new THREE.WebGLRenderer( { antialias: false, alpha: false } );
+	//renderer = new THREE.WebGLRenderer( { antialias: false, alpha: false } );
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.shadowMap.enabled = true;
@@ -328,7 +338,7 @@ function init() {
 
 	window.addEventListener( 'resize', onWindowResize );
 
-	const controls = new OrbitControls( camera, renderer.domElement );
+	controls = new OrbitControls( camera, renderer.domElement );
 	controls.minDistance = 0;
 	controls.maxDistance = 50;
 	//controls.enableDamping = true;
@@ -358,7 +368,7 @@ function onPointerMove( event ) {
 	intersects = raycaster.intersectObjects(pickableObjects, false)
 	
 	if (intersects.length > 0) {
-		// console.log(curr_intersect, intersects[0].object.name)
+		console.log(curr_intersect, intersects[0].object.name)
 		// if (intersects[0].object.name != curr_intersect) {
 		// 	StopSound('mySound');
 		// 	PlaySound('mySound');
@@ -391,12 +401,32 @@ function onPointerMove( event ) {
 		//erp_img_div.innerHTML = '';
 		//var imgElement = document.createElement('img');
 		var img_name = `./png/${map_type}/${intersectedObject.subj}_${intersectedObject.ch}_${map_type}.png`;
+		const blank_img_name = `./png/not_available.png`;
+		var is_available = true;
 		console.log(img_name);
-		document.getElementById('erp_img').src = img_name;
-		document.getElementById('erp_img').onload = function() {
-    // Now the image is loaded, you can safely set its dimensions
-    this.style.width = "300px";
-    this.style.height = "250px";
+		const imgElement = document.getElementById('erp_img');
+		imgElement.src = img_name;
+		if (imgElement) {
+        imgElement.onerror = function() {
+            // If the image fails to load, display the "Not available" message
+            imgElement.src = blank_img_name;
+            is_available = false;
+        };
+    } else {
+        // If the image element itself does not exist, display the "Not available" message
+        imgElement.src = blank_img_name;
+        is_available = false;
+    }
+    document.getElementById('erp_img').onload = function() {
+    	// Now the image is loaded, you can safely set its dimensions
+    	console.log(img_name, imgElement)
+    	if (is_available) {
+    		this.style.width = "300px";
+    		this.style.height = "250px";
+    	} else {
+    		this.style.width = "150px";
+    		this.style.height = "50px";
+    	}
 		};
 		//erp_img_div.appendChild(imgElement);
 		//var phn_item = document.getElementById('phn');
@@ -430,8 +460,11 @@ function loadAsset( params ) {
 	            'rh': 'meshes/' + params.subj + '/rh_pial_smooth' + smooth + '.obj'};
 
 	switch (params.respType) {
-		case 'consistency index':
-			map_type = 'ci';
+	  case 'MTRF':
+	  	map_type = 'mtrf';
+	  	break;
+		case 'consistent/inconsistent':
+			map_type = 'elsh';
 			break;
 		case 'NMF':
 			map_type = 'nmf';
@@ -537,6 +570,7 @@ function loadAsset( params ) {
 	 					var scale = 1.0;
 
 						if (elec_array[i].include_elec == 'False') {
+	 					//if ((elec_array[i].el_p > 0.05) || (elec_array[i].sh_p > 0.05)) {
 							scale = 0.3;
 							rgb = [0, 0, 0];
 						}
@@ -576,8 +610,8 @@ function loadAsset( params ) {
 						if (curr_elec_device.name == last_elec_device.name) {
 							//if (object.electype == 'depth') {
 							if (curr_elec_device.name != 'LG') { // this one is a grid
-								console.log('making a line')
-								console.log(curr_elec_device.name, last_elec_device.name)
+								//console.log('making a line')
+								//console.log(curr_elec_device.name, last_elec_device.name)
 								//console.log(elec_array[i].ch)
 								const points = [];
 								points.push( new THREE.Vector3( curr_elec_device.x, curr_elec_device.y, curr_elec_device.z ) );
@@ -628,12 +662,12 @@ function loadAsset( params ) {
 						object.red = elec_array[i].value_norm_spkr; //rgb[0];
 						object.green = 0; //rgb[1];
 						object.blue = elec_array[i].value_norm_mic; //rgb[2];
-						console.log(elec_array[i].value_norm_spkr, elec_array[i].value_norm_mic)
+						//console.log(elec_array[i].value_norm_spkr, elec_array[i].value_norm_mic)
 						
 						//scene.add(object);
 						//electrode_group.add(object);
 						if (object.position.z > 0) {
-							console.log('adding to pivot_lh object')
+							//console.log('adding to pivot_lh object')
 							object.visible = params.lh_checkbox;
 							
 							pivot_lh.add(object);
@@ -675,6 +709,31 @@ function updateElecs() {
 
 }
 
+// export function animateCameraToObject(objectName) {
+//     const object = scene.getObjectByName(objectName);
+//     if (object) {
+//         const targetPosition = new THREE.Vector3();
+//         object.getWorldPosition(targetPosition);
+
+//         const startRotation = new THREE.Euler().copy(camera.rotation);
+//         camera.lookAt(targetPosition);
+//         const endRotation = new THREE.Euler().copy(camera.rotation);
+//         camera.rotation.copy(startRotation);
+
+//         new TWEEN.Tween(camera.rotation)
+//             .to({
+//                 x: endRotation.x,
+//                 y: endRotation.y,
+//                 z: endRotation.z
+//             }, 2000) // Duration of the animation in milliseconds
+//             .easing(TWEEN.Easing.Quadratic.InOut)
+//             .start();
+//     } else {
+//         console.log("Object not found:", objectName);
+//     }
+// }
+
+
 //
 
 function animate() {
@@ -686,12 +745,28 @@ function animate() {
 	//pivot_rh.add(scene.getObjectByName('brain_rh'))
 	//pivot_rh.rotation.set(0, Math.PI / 2, 0);
 	
-	//requestAnimationFrame( animate );
-	
+	// requestAnimationFrame( animate );
+	// TWEEN.update();
 	render();
 	//stats.update();
 
 }
+export function animate2() {
+	//pivot_lh.center
+	//pivot_lh.add(device_group_lh)
+	//pivot_lh.add(scene.getObjectByName('brain_lh'))
+	//pivot_lh.rotation.set(0, -Math.PI / 2, 0);
+
+	//pivot_rh.add(scene.getObjectByName('brain_rh'))
+	//pivot_rh.rotation.set(0, Math.PI / 2, 0);
+	
+	requestAnimationFrame( animate2 );
+	TWEEN.update();
+	render();
+	//stats.update();
+
+}
+
 
 function render() {
 	//pivot_lh.rotateY(controls.rotation);
@@ -739,11 +814,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (panel.classList.contains('hidden')) {
             // Show the panel and change link text to "Hide"
-        		console.log('showing')
+        		//console.log('showing')
             panel.classList.remove('hidden');
             link.textContent = '((Hide this panel))';
         } else {
-        	console.log('hiding')
+        		//console.log('hiding')
             // Hide the panel and change link text to "Show"
             panel.classList.add('hidden');
             link.textContent = '((Show info))';
@@ -753,7 +828,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var content = document.querySelector('.collapsible-content');
 
     collapseButton.addEventListener('click', function() {
-    	console.log(content.style.display)
+    	//console.log(content.style.display)
         if (content.style.display === "none" || content.style.display === '') {
             content.style.display = "block";
             collapseButton.innerHTML = "<h2 id='elecinfotxt'>▼ Electrode Info:</h2>";
@@ -766,7 +841,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var collapseERP = document.getElementById('collapse-erp');
 		var contentERP = document.querySelector('.collapsible-erp-content');
     collapseERP.addEventListener('click', function() {
-    	console.log(contentERP.style.display)
+    	//console.log(contentERP.style.display)
         if (contentERP.style.display === "none" || contentERP.style.display === '') {
             contentERP.style.display = "block";
             collapseERP.innerHTML = "<h2 id='evokedtxt'>▼ Evoked Potential:</h2>";
@@ -776,3 +851,81 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+export function rotateScene(rotation) {
+    const initialRotation = { theta: controls.getAzimuthalAngle() };
+    const targetRotation = { theta: initialRotation.theta + rotation };
+
+    new TWEEN.Tween(initialRotation)
+        .to(targetRotation, 3000) // Duration of the animation in milliseconds
+        .easing(TWEEN.Easing.Quadratic.InOut)
+        .onUpdate(() => {
+            controls.update();
+            controls.object.position.setFromSphericalCoords(
+                controls.object.position.length(),
+                controls.getPolarAngle(),
+                initialRotation.theta
+            );
+        })
+        .start();
+}
+
+// export function rotateCamera(rotation, multiplier) {
+//     const initialRotation = { y: camera.rotation.y };
+//     const targetRotation = { y: camera.rotation.y + multiplier*rotation };
+
+//     new TWEEN.Tween(initialRotation)
+//         .to(targetRotation, 2000) // Duration of the animation in milliseconds
+//         .easing(TWEEN.Easing.Quadratic.InOut)
+//         .onUpdate(() => {
+//             camera.rotation.y = initialRotation.y;
+//         })
+//         .start();
+// }
+
+export function pickObject(objectName) {
+    console.log(`Getting info for ${objectName}`)
+    console.log(scene);
+    intersectedObject = scene.getObjectByName(objectName);
+    if (intersectedObject) {
+        console.log('found it')
+        document.getElementById('parttxt').textContent = intersectedObject.subj;
+				document.getElementById('chtxt').textContent = intersectedObject.ch;
+				document.getElementById('anattxt').textContent = intersectedObject.anatomy;
+				var img_name = `./png/${map_type}/${intersectedObject.subj}_${intersectedObject.ch}_${map_type}.png`;
+				const blank_img_name = `./png/not_available.png`;
+				var is_available = true;
+				console.log(img_name);
+				const imgElement = document.getElementById('erp_img');
+				imgElement.src = img_name;
+				if (imgElement) {
+		        imgElement.onerror = function() {
+		            // If the image fails to load, display the "Not available" message
+		            imgElement.src = blank_img_name;
+		            is_available = false;
+		        };
+		    } else {
+		        // If the image element itself does not exist, display the "Not available" message
+		        imgElement.src = blank_img_name;
+		        is_available = false;
+		    }
+		    document.getElementById('erp_img').onload = function() {
+		    	// Now the image is loaded, you can safely set its dimensions
+		    	console.log(img_name, imgElement)
+		    	if (is_available) {
+		    		this.style.width = "300px";
+		    		this.style.height = "250px";
+		    	} else {
+		    		this.style.width = "150px";
+		    		this.style.height = "50px";
+		    	}
+				};
+    } else {
+        console.log("Object not found:", objectName);
+    }
+}
+
+window.pickObject = pickObject;
+window.rotateScene = rotateScene;
+window.rotateCamera = rotateCamera;
+window.animate2 = animate2;

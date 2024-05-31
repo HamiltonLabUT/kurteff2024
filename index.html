@@ -9,24 +9,15 @@
                 <link rel="icon" type="image/x-icon" href="images/favicon.ico">
 	</head>
 	<body>
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-					"three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-				}
-			}
-		</script>
-        <script type="text/javascript" src="./papaparse.min.js"></script>
-		<script type="module" src="viewer_op.js"></script>
 		<div id="topleft" class="resize-on-mobile">
-			<h1 id="title">Intracranial EEG Processing of Auditory Feedback in Perisylvian Cortex</h1>
+			<h1 id="title">Processing of auditory feedback in perisylvian and insular cortex</h1>
 			<div id="infoleft" >
-			<p id="infopara" class="hide-on-mobile">Based on data from Kurteff et al. (in prep). Participants sentences aloud and listened to playback of their own voice. Click on electrodes to see their responses during <span style="color: #873b8a; font-weight: bold">speaking</span>, <span style="color: #257036; font-weight: bold">listening</span>, and a <span style="color: #f87efd; font-weight: bold">click</span> sound.</p>
+			<p id="infopara" class="hide-on-mobile">Read the paper: <a href="https://doi.org/10.1101/2024.05.14.593257" target="_new">Kurteff et al. Biorxiv 2024.</a></p>
 			<ul id="navhelp" class="hide-on-mobile">
 				<li><b>Rotate:</b> Click and drag</li>
 				<li><b>Zoom:</b> Scroll</li>
 				<li><b>Pan:</b> Two-finger click and drag / shift-click and drag</li>
+				<li><b><a href="showSlide(0);">View tutorial</a></b></li>
 			</ul>
 			</div>
 			<p id="hidepara" class="hide-on-mobile"><a id="hidelink" href="#">((Hide this panel))</a></p>
@@ -40,7 +31,7 @@
 			<li><span><b>Participant:</b> <span id="parttxt">Click on electrodes to select</span></span></li>
 			<li><span><b>Electrode Name:</b> <span id="chtxt"></span></span></li>
 			<li><span><b>Anatomy:</b> <span id="anattxt"></span></span></li>
-			<!--<li><span id="erp_img"><img src="./png/ci/S0004_LHippo1_ci.png"/></span></li>//-->
+			<!--<li><span id="erp_img"><img src="./png/ci/DC8_LHippo1_ci.png"/></span></li>//-->
 			</ul>
 		</div>
 		</div>
@@ -52,9 +43,92 @@
 		</div> -->
 		<div id="lowerright" class="resize-on-mobile">
 			<button id="collapse-erp"><h2 id="evokedtxt">▼ Evoked Potential:</h2></button>
-			<div class="collapsible-erp-content" style="display: block">
-				<img id="erp_img" class="resize-on-mobile" src="./png/si/TCH06_RSF6_si.png"/>
+			<div class="collapsible-erp-content" style="display: block" id="erp_div">
+				<img id="erp_img" class="resize-on-mobile" src="./png/si/DC12_PMT-PH12_si.png" style="width: 300px; height: 250px"/>
 			</div>
 		</div>
+
+		<div id="tutorialOverlay" class="overlay">
+	        <div id="tutorialSlide1" class="tutorialSlide">
+	            <h2>Brain Viewer Tour</h2>
+	            <p>This is an interactive viewer to accompany our paper <a href="https://doi.org/10.1101/2024.05.14.593257" target="_new">Processing of auditory feedback in perisylvian and insular cortex</a>. In our study, participants <span style="color: #873b8a; font-weight: bold">read sentences aloud</span> and <span style="color: #257036; font-weight: bold">listened to playback</span> of their own voice.</p>
+	            <p><img src="images/01_tutorial_task.png" width=500px, alt="Schematic of reading + playback audio. Participants first heard a click, then read sentences aloud while hearing their own voice. After a second click sound, their own voice was played back to them."/></p>
+	            <p>We recorded neural data from intracranial electrodes from patients with epilepsy as they performed this task.</p>
+	            <p><i>Research performed by Garret Lynn Kurteff, Alyssa M. Field, Saman Asghar, Elizabeth C. Tyler-Kabara, Dave Clarke, Howard L. Weiner, Anne E. Anderson, Andrew J. Watrous, Robert J. Buchanan, Pradeep N. Modur, Liberty S. Hamilton.</i></p>
+	            <p><i>Viewer created by Liberty Hamilton using 3js</i></p>
+	            <button onclick="nextSlide(1)">Next</button>
+	            <button onclick="endTutorial()">Close Tutorial</button>
+	        </div>
+	        <div id="tutorialSlide2" class="tutorialSlide">
+	            <h2>Consistent and Inconsistent</h2>
+	            <p>Trials were split up into <span style="color: #577aea; font-weight:bold">consistent</span> and <span style="color: #ca7949; font-weight:bold" >inconsistent</span> playback, where consistent matched exactly what they had said in that trial, and inconsistent playback would play audio of a previous sentence. In all cases, the audio is spoken by the patient.</p>
+	            <p><img src="images/02_con_in.png" width=500px, alt="Schematic of consistent vs. inconsistent playback"/></p>
+	            <button onclick="prevSlide(1)">Previous</button>
+	            <button onclick="nextSlide(2)">Next</button>
+	            <button onclick="endTutorial()">Close Tutorial</button>
+	        </div>
+	        <div id="tutorialSlide3" class="tutorialSlide">
+	            <h2>Choose Participant →</h2>
+	            <p>You can use this viewer to click on individual electrodes and see their responses during different conditions in the speaking and listening task. You can view all electrodes projected onto a single <i>atlas</i> brain, or you can choose to view <i>individual participants</i> by choosing from the dropdown menus at the top right.</p>
+	            <p><i>Device lines</i> will draw lines between electrode channels that are part of the same implanted sEEG device</p>
+	            <button onclick="prevSlide(2)">Previous</button>
+	            <button onclick="nextSlide(3)">Next</button>
+	            <button onclick="endTutorial()">Close Tutorial</button>
+	        </div>
+	        <div id="tutorialSlide4" class="tutorialSlide">
+	            <h2>Choose Response Type →</h2>
+	            <p>Click on electrodes to view their high gamma evoked potential responses. For <i>Response Type</i> you can choose between:
+	            	<ul>
+	            		<li><b>suppression index</b>: 
+	            			<ul>
+	            			<li><span style="color: #873b8a; font-weight: bold">purple</span> = bigger neural response during <span style="color: #873b8a; font-weight: bold">speaking</span></li>
+	            			<li><span style="color: #257036; font-weight: bold">green</span> = bigger neural response during <span style="color: #257036; font-weight: bold">listening</span></li></ul></li>
+	            		<li><b>NMF</b>: electrodes will be colored by their weighting on the NMF <span style="color: #be0a20; font-weight: bold">onset</span> and <span style="color: #2e56a5; font-weight: bold">sustained</span> clusters.</li>
+	            		<li>consistent/inconsistent: Electrodes will be colored <span style="color: #577aea; font-weight:bold">more blue</span> if they respond to <span style="color: #577aea; font-weight:bold">consistent</span> feedback and <span style="color: #ca7949; font-weight:bold">more orange</span> if they respond to <span style="color: #ca7949; font-weight:bold">inconsistent feedback</span>.</li>
+	            		<li><b>Multivariate temporal receptive field (MTRF)</b>. The receptive field weights are shown at the bottom right for phonological information and task related information. Electrodes are colored darker red when they are better predicted by the receptive field model.</li>
+	            	</ul>
+	            </p>
+	            <button onclick="prevSlide(3)">Previous</button>
+	            <button onclick="nextSlide(4)">Next</button>
+	            <button onclick="endTutorial()">Close Tutorial</button>
+	        </div>
+	        <div id="tutorialSlide5" class="tutorialSlide">
+	            <h2>Electrode Information</h2>
+	            <p>When you click on an electrode, you will also see information about the participant ID, electrode name (given by the clinical montage), and anatomical area.
+	            </p>
+	            <button onclick="prevSlide(4)">Previous</button>
+	            <button onclick="rotateScene(Math.PI); pickObject('electrode1780'); nextSlide(5)">Next</button>
+	            <button onclick="endTutorial()">Close Tutorial</button>
+	        </div>
+	       	<div id="tutorialSlide6" class="tutorialSlide">
+	            <h2>Onset suppression during speaking</h2>
+	            <p>This electrode shows strong onset responses during <span style="color: #257036; font-weight: bold">listening</span> that are suppressed during <span style="color: #873b8a; font-weight: bold">speaking</span>.
+	            </p>
+	            <button onclick="rotateScene(-Math.PI); prevSlide(5)">Previous</button>
+	            <button onclick="nextSlide(6)">Next</button>
+	            <button onclick="endTutorial()">Close Tutorial</button>
+	        </div>
+	        <!-- Add more slides as needed -->
+	        <div id="tutorialSlide7" class="tutorialSlide">
+	            <h2>End of Tutorial</h2>
+	            <p>You're ready to explore the brain viewer on your own! Try clicking on electrodes, changing the angle of view, or trying different colors and transparencies for the brain. Have fun!</p>
+	            <button onclick="prevSlide(6)">Previous</button>
+	            <button onclick="endTutorial()">Finish</button>
+	        </div>
+    	</div>
+
+		<script type="importmap">
+			{
+				"imports": {
+					"three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+					"three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+				}
+			}
+		</script>
+        <script type="text/javascript" src="./papaparse.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+		<script type="module" src="viewer_op.js"></script>
+		<script type="text/javascript" src="./tour.js"></script>
+
 	</body>
 </html>
